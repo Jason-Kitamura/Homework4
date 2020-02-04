@@ -1,3 +1,4 @@
+
 let questions = [
     "What is the Capital of France?",
     "What is YOUR favorite color?",
@@ -28,62 +29,7 @@ let answers = [
     },
 ];
 
-
 let questionNumber = 0
-
-    
-function correctF(){
-    console.log('correct');
-    questionNumber++;
-    if (questionNumber===2){
-        questionTwo();
-    }
-    if (questionNumber===3){
-        questionThree();
-    }
-    if (questionNumber===4){
-        questionFour();
-    }
-    if (questionNumber===5){
-        questionFive();
-    }
-    if (questionNumber===6){
-        questionSix();
-    }
-}
-function incorrectF() {
-    console.log('incorrect');
-    questionNumber++;
-    if (questionNumber===2){
-        questionTwo();
-    }
-    if (questionNumber===3){
-        questionThree();
-    }
-    if (questionNumber===4){
-        questionFour();
-    }
-    if (questionNumber===5){
-        questionFive();
-    }
-    if (questionNumber===6){
-        questionSix();
-    }
-   }
-
-function startQuiz()  {
-
-    questionNumber++;
-
-    console.log('you clicked start');
-
-    if (questionNumber === 1) {
-        questionOne();
-    }
-
-}
-
-document.getElementById('start').addEventListener('click', startQuiz);
 
 let startBox = document.querySelector('#startDiv');
 let question = document.querySelector('#question');
@@ -92,11 +38,34 @@ let option1 = document.querySelector('#option1');
 let option2 = document.querySelector('#option2');
 let option3 = document.querySelector('#option3');
 
+var count;
+var interval;
+
+function startTimer(){
+    count = 60;
+    interval = setInterval(function(){
+        document.getElementById('count').innerHTML=count;
+        count--;
+    if (count === 0){
+        
+        endQuiz();
+
+    }}, 1000);}
+
+
 function questFun(i) {question.innerHTML=questions[i];};
 function optionA(j) {option0.innerHTML=answers[j].AnswerA;};
 function optionB(k) {option1.innerHTML=answers[k].AnswerB;};
 function optionC(l) {option2.innerHTML=answers[l].AnswerC;};
 function optionD(n) {option3.innerHTML=answers[n].AnswerD;};
+
+function removeOptions(){
+    question.innerHTML= "";
+    option0.innerHTML= "";
+    option1.innerHTML= "";
+    option2.innerHTML= "";
+    option3.innerHTML= "";
+}
 
 function removeListener() {
     option0.removeEventListener('click', correctF);
@@ -107,13 +76,73 @@ function removeListener() {
     option2.removeEventListener('click', incorrectF);
     option3.removeEventListener('click', correctF);
     option3.removeEventListener('click', incorrectF);
-    
 }
+function removeDialogue() {
+    document.querySelector('#dialogue').innerHTML=""
+}
+
+    
+function correctF(){
+    console.log('correct');
+    questionNumber++;
+    document.querySelector('#dialogue').innerHTML="CORRECT!"
+    document.querySelector('#dialogue').style.color="green";
+    setTimeout(function() {
+        
+    if (questionNumber===2){
+        questionTwo();}
+    if (questionNumber===3){
+        questionThree(); }
+    if (questionNumber===4){
+        questionFour();}
+    if (questionNumber===5){
+        questionFive();}
+    if (questionNumber===6){
+        questionSix();}
+    if (questionNumber===7){
+        endQuiz();}
+    }, 1000);
+}
+
+function incorrectF() {
+    console.log('incorrect');
+    questionNumber++;
+    count = count-10;
+    document.querySelector('#dialogue').innerHTML="WRONG!"
+    document.querySelector('#dialogue').style.color="red";
+
+    setTimeout(function(){
+    if (questionNumber===2){
+        questionTwo();}
+    if (questionNumber===3){
+        questionThree();}
+    if (questionNumber===4){
+        questionFour();}
+    if (questionNumber===5){
+        questionFive();}
+    if (questionNumber===6){
+        questionSix();}
+    if (questionNumber===7){
+        endQuiz();}
+    },1000);
+}
+
+function startQuiz()  {
+    startTimer();
+    console.log('you clicked start');
+    questionNumber++;
+    if (questionNumber === 1) {
+        questionOne();}
+}
+
+document.getElementById('start').addEventListener('click', startQuiz);
 
 
 function questionOne (){
     
     startBox.classList.add('hide');
+
+    removeDialogue();
     
     questFun(0);
 
@@ -132,6 +161,7 @@ function questionOne (){
 function questionTwo() {
     
     removeListener();
+    removeDialogue();
 
     questFun(1);
 
@@ -148,10 +178,10 @@ function questionTwo() {
     option3.addEventListener('click', correctF);
 }
 
-    
-function questionThree() {
+    function questionThree() {
 
     removeListener();
+    removeDialogue();
     
     questFun(2);
 
@@ -171,7 +201,8 @@ function questionThree() {
 function questionFour() {
 
     removeListener();
-
+    removeDialogue();
+    
     questFun(3);
 
     optionA(3);
@@ -190,7 +221,8 @@ function questionFour() {
 function questionFive() {
 
     removeListener();
-
+    removeDialogue();
+    
     questFun(4);
 
     optionA(4);
@@ -209,7 +241,8 @@ function questionFive() {
 function questionSix() {
 
     removeListener();
-   
+    removeDialogue();
+    
     questFun(5);
 
     optionA(5);
@@ -224,7 +257,21 @@ function questionSix() {
     optionD(5);
     option3.addEventListener('click', incorrectF);
 }
-    
+
+function endQuiz() {
+
+    console.log('done quiz!')
+
+    clearInterval(interval);
+
+    removeListener();
+    removeDialogue();
+    removeOptions();
+
+
+
+    document.querySelector('#finalScore').innerHTML=  `Compelete! your final score is ${count}!`;
+}
 
 
 

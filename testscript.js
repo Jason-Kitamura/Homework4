@@ -109,10 +109,10 @@ function removeListener() {
     option3.removeEventListener('click', incorrectF);
 }
 function correctfunction(num) {
-    option(num).addEventListener('click', correctF);
+    option+num.addEventListener('click', correctF);
 }
 function incorrectfunction(num) {
-    option(num).addEventListener('click', incorrectF);
+    option+num.addEventListener('click', incorrectF);
 }
 
 
