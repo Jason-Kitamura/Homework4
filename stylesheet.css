@@ -1,0 +1,22 @@
+
+.container {
+    display: block;
+    margin: auto;
+    margin-top: 10%;
+}
+
+#start {
+    padding: 5%;
+    border-radius: 5%;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+.item {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+.hide {
+    display: none;
+}
