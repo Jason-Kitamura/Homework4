@@ -1,49 +1,17 @@
-pseudo code
+This code quiz took a lot of code to write. I am aware that there is definitely a shorter method to creating this quiz, but this is what I know, and amd very happy to get it working 95% on my own.
 
-start
-    -strt button
-    -high scores (from local storage)
+The quiz works pretty well. 
+    - First users will press the start button to start, and the timer will start cownting down from 60.
+    - Users can answer the question by clicking on the answer they choose,
+    - if the answer if right, a dialogue pops up saying 'correct!' and the next question and answers pop up.
+    - if the answer is wrong, a dialogue pops up saying 'wrong!", the time decreases by 10, and the next question and answers pop up.
+     - the quiz is over once they have answered all of the questions, or the timer <= 0.
+     - The user is then shown their score (time left), a button to play again(refresh the screen), and submit their name and score
+     - if they click subit, their info will be stores in loval storage
 
-    function 
-        - when button pressed, go to/show question1
-        - when pressed - display list from local storage (in order from highest to loswest score?)
-
-    in quiz
-
-    start timer
-
-    start button
-        -display  question1 
-        - display answers
-        - add correct and inccorrect id
-        - strt timer
+A few extra features,
+    - the highscore list (which does not work yet) toggles between showing and hidden everytime a user click the button
+    - press F5 to exit quiz(user could already do this but now they know how)
 
 
-run listener function on page for check boxes
-run listener for esc to exit
-run function- run function () {   
-            - if right - display : correct, and move to next question
-            - if wrong - display : wrong, deduct time and move to next questiom
-
-    function 
-        - when button is checked -
-
-          
-        
-        - display button next }
-
-    next button
-        - when pressed
-            - reset question
-            - reset answers
-            - reset id
-            - reset button
-
-    repeat for all questions
-
-    last question 
-
-        - display submit button
-            - remove all questions and answers
-            - show score = time left
-            - add score to local storage
+That being said, eveything works except the highscores list. (stores data in local storage but no function to pull it out into the highscores section YET).

@@ -2,7 +2,7 @@
 .container {
     display: block;
     margin: auto;
-    margin-top: 10%;
+    /* margin-top: 10%; */
 }
 
 #start {
@@ -19,4 +19,9 @@
 }
 .hide {
     display: none;
+}
+.submitBox {
+    width: 40%;
+    /* display: block; */
+    margin: auto;
 }

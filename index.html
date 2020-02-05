@@ -10,15 +10,25 @@
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-
-        <div id="count" class="item">Timer</div>
         <div id="exit">Press F5 to exit quiz</div>
+        <div id="count" class="item">Timer</div>
+        <div class="">
+            <button id="HS-Btn">HighScore</button>
+        </div>
+        <div class="container hide" id="highScores">
+                HighScores List not available, coming out in next update!!!
+                <ul id="scoreList">
+
+                </ul>
+        </div>
+        
         <div id="dialogue" class="item">
             Press 'Start' to start the quiz! <br>
             You have 60 seconds to compelete it.<br>
              Every wrong question will deduct 10 seconds from timer. <br>
              Higher timer= higher Score! Good Luck!<br>
         </div>
+    
 
     <div class="container ">
         
@@ -45,8 +55,18 @@
         <div id="finalScore" class="item">
 
         </div>
-        <div id="buttons">
+        <br><br>
+        <div id="buttons" class="item">
 
+        </div>
+        <br>
+        <div class="input-group mb-3 submitBox hide">
+            <input type="text" class="form-control" id="textBox" placeholder="Name">
+            <div class="input-group-append submitBtn">
+              <span class="input-group-text" id="score-Btn">
+                  Submit Score
+              </span>
+            </div>
         </div>
     </div>
     <script src="script.js" ></script>

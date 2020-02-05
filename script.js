@@ -1,4 +1,4 @@
-
+// Creating an array of Questions to ask
 let questions = [
     "What is the Capital of France?",
     "What is YOUR favorite color?",
@@ -8,6 +8,7 @@ let questions = [
     'Did you enjoy this quiz?'
 ];
 
+// Creating an Array of objects- made up of answers
 let answers = [
     {
         AnswerA: "Paris", AnswerB: "Amsterdam", AnswerC: "France", AnswerD: "baguette",
@@ -29,15 +30,26 @@ let answers = [
     },
 ];
 
+// creating variable that will call a different question for every value (see correctF and incorrectF)
 let questionNumber = 0
 
-let startBox = document.querySelector('#startDiv');
-let question = document.querySelector('#question');
-let option0 = document.querySelector('#option0');
-let option1 = document.querySelector('#option1');
-let option2 = document.querySelector('#option2');
-let option3 = document.querySelector('#option3');
+// function to show highscores lits when pressed highscores button. First click= show scores, second click= hide scores
+let viewScores=false;
 
+function showScores() {
+
+    console.log=('hs button');
+
+    viewScores = !viewScores;
+
+    if (viewScores==true){
+    document.getElementById('highScores').classList.remove('hide');
+    } else {
+    document.getElementById('highScores').classList.add('hide');
+}}
+document.getElementById('HS-Btn').addEventListener('click', showScores);
+
+// creative variables for timer outside of function so tha they can be accessed globally
 var count;
 var interval;
 
@@ -46,12 +58,19 @@ function startTimer(){
     interval = setInterval(function(){
         document.getElementById('count').innerHTML=count;
         count--;
-    if (count === 0){
+    if (count <= 0){
         
         endQuiz();
 
     }}, 1000);}
 
+ //  variables to shorten repetitiveness in 'question functions'
+let startBox = document.querySelector('#startDiv');
+let question = document.querySelector('#question');
+let option0 = document.querySelector('#option0');
+let option1 = document.querySelector('#option1');
+let option2 = document.querySelector('#option2');
+let option3 = document.querySelector('#option3');
 
 function questFun(i) {question.innerHTML=questions[i];};
 function optionA(j) {option0.innerHTML=answers[j].AnswerA;};
@@ -59,6 +78,7 @@ function optionB(k) {option1.innerHTML=answers[k].AnswerB;};
 function optionC(l) {option2.innerHTML=answers[l].AnswerC;};
 function optionD(n) {option3.innerHTML=answers[n].AnswerD;};
 
+// function to remove the questions and answers
 function removeOptions(){
     question.innerHTML= "";
     option0.innerHTML= "";
@@ -66,7 +86,7 @@ function removeOptions(){
     option2.innerHTML= "";
     option3.innerHTML= "";
 }
-
+// function to remove listeners from question answers, so that new ones can be added for next question (so questions don't call both correct and incorrect)
 function removeListener() {
     option0.removeEventListener('click', correctF);
     option0.removeEventListener('click', incorrectF);
@@ -77,18 +97,38 @@ function removeListener() {
     option3.removeEventListener('click', correctF);
     option3.removeEventListener('click', incorrectF);
 }
+
+// function to remove dialogue
 function removeDialogue() {
     document.querySelector('#dialogue').innerHTML=""
 }
 
-    
+// object to hold username and score
+let scoreInput = {
+    name: "",
+    score: ""};
+// function to store name and score in local storage when score-Btn is clicked.
+function submitScore() {
+
+    scoreInput.name = document.getElementById('textBox').value;
+    scoreInput.score = count
+
+    console.log(scoreInput.score);
+    console.log(scoreInput.name);
+
+    localStorage.setItem(count, JSON.stringify(scoreInput));
+}
+document.getElementById('score-Btn').addEventListener('click', submitScore);
+
+// function to call if user selects correct answer. Shows 'correct' dialogue, increases question number, calls function for next question
 function correctF(){
     console.log('correct');
     questionNumber++;
+    removeListener();
     document.querySelector('#dialogue').innerHTML="CORRECT!"
     document.querySelector('#dialogue').style.color="green";
-    setTimeout(function() {
-        
+
+    setTimeout(function() {        
     if (questionNumber===2){
         questionTwo();}
     if (questionNumber===3){
@@ -103,11 +143,12 @@ function correctF(){
         endQuiz();}
     }, 1000);
 }
-
+// similar to correctF but also decreases timer by 10 seconds
 function incorrectF() {
     console.log('incorrect');
     questionNumber++;
     count = count-10;
+    removeListener();
     document.querySelector('#dialogue').innerHTML="WRONG!"
     document.querySelector('#dialogue').style.color="red";
 
@@ -127,6 +168,7 @@ function incorrectF() {
     },1000);
 }
 
+// start quiz function, called when user presses start button
 function startQuiz()  {
     startTimer();
     console.log('you clicked start');
@@ -137,7 +179,7 @@ function startQuiz()  {
 
 document.getElementById('start').addEventListener('click', startQuiz);
 
-
+// question functions, each one edits the html through DOM to change the question, options, and event listeners 
 function questionOne (){
     
     startBox.classList.add('hide');
@@ -160,7 +202,6 @@ function questionOne (){
 }
 function questionTwo() {
     
-    removeListener();
     removeDialogue();
 
     questFun(1);
@@ -180,7 +221,6 @@ function questionTwo() {
 
     function questionThree() {
 
-    removeListener();
     removeDialogue();
     
     questFun(2);
@@ -200,7 +240,6 @@ function questionTwo() {
     
 function questionFour() {
 
-    removeListener();
     removeDialogue();
     
     questFun(3);
@@ -220,7 +259,6 @@ function questionFour() {
     
 function questionFive() {
 
-    removeListener();
     removeDialogue();
     
     questFun(4);
@@ -240,7 +278,6 @@ function questionFive() {
     
 function questionSix() {
 
-    removeListener();
     removeDialogue();
     
     questFun(5);
@@ -258,19 +295,31 @@ function questionSix() {
     option3.addEventListener('click', incorrectF);
 }
 
+// endQuiz function, called when questionnumber=7
+// removes questions and options, pauses timer, shows score as time left, un-hides submit box, and adds a button to reeresh page(play again),
 function endQuiz() {
 
     console.log('done quiz!')
 
     clearInterval(interval);
 
-    removeListener();
     removeDialogue();
     removeOptions();
 
-
-
     document.querySelector('#finalScore').innerHTML=  `Compelete! your final score is ${count}!`;
+
+    document.querySelector('.submitBox').classList.remove('hide');
+
+    var playButton=document.createElement('Button');
+    playButton.innerHTML="Play Again!";
+    document.getElementById('buttons').appendChild(playButton);
+
+    function pageRefresh() {
+        location.reload();
+        console.log('page refresh');
+    }
+    document.getElementById('buttons').addEventListener('click', pageRefresh);
+
 }
 
 
